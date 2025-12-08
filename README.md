@@ -114,12 +114,13 @@ This code is free for anyone to use, learn from, or point and laugh at. If it he
 ```
     .---. .---.
    (:====||====:)
+    ------------
     |    ||    |
     |    ||    |     "It compiles!"
     |====||====|          - My only requirement
     |    ||    |
     |    ||    |
-   '     ''     `
+    ------------
 
 ```
 
