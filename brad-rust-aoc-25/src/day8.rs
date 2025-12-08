@@ -79,6 +79,7 @@ pub fn part1(file_name: &str, top_num: i32) -> Result<i64, Box<dyn std::error::E
     let mut junction_distances: Vec<((i64, i64), f64)> = connections.into_iter().zip(distances).collect(); // Zip the two vectors together
     junction_distances.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap()); // Then sort by .1 (distances)
 
+    // I guess for part 2 just remove this?
     junction_distances.truncate(top_num as usize); // Take the top 10
 
     println!("Creating chains from truncated list...");
@@ -86,7 +87,7 @@ pub fn part1(file_name: &str, top_num: i32) -> Result<i64, Box<dyn std::error::E
     let mut chains: Vec<Vec<i64>> = Vec::new();
 
     'upper: for j in &junction_distances {
-        println!("{}-{} {}", j.0.0, j.0.1, j.1);
+        //println!("{}-{} {}", j.0.0, j.0.1, j.1);
         for x in 0..chains.len() {
             if chains[x].contains(&j.0.0) && chains[x].contains(&j.0.1) {
                 continue 'upper;
@@ -113,9 +114,12 @@ pub fn part1(file_name: &str, top_num: i32) -> Result<i64, Box<dyn std::error::E
             for y in x+1..chains.len() {
                 for i in 0..chains[y].len() {
                     if chains[x].contains(&chains[y][i]) {
-                        chains[y].remove(i);
-                        let mut temp_chain = chains[y].clone();
-                        chains[x].append(&mut temp_chain);
+                        let chain_y_clone = chains[y].clone();
+                        for element in &chain_y_clone {
+                            if !chains[x].contains(element) {
+                                chains[x].push(*element);
+                            }
+                        }
                         chains.remove(y);
                         changes+=1;
                         continue 'upper;
