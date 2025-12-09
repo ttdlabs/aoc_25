@@ -109,13 +109,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>>{
         let day8part1 = day8::part1("08.txt", 1000)?;
         let day8part1time = now.elapsed();
 
-        //now = Instant::now();
-        //let day8part2 = day8::part2("08b.txt")?;
-        //let day8part2time = now.elapsed();
+        now = Instant::now();
+        let day8part2 = day8::part2("08.txt")?;
+        let day8part2time = now.elapsed();
 
         println!("Day Eight Task Results:");
         println!("Part 1 Answer: {} ({:.2?})", day8part1, day8part1time);
-        //println!("Part 2 Answer: {} ({:.2?})", day8part2, day8part2time);
+        println!("Part 2 Answer: {} ({:.2?})", day8part2, day8part2time);
     }
 
     Ok(())
