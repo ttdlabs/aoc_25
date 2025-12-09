@@ -6,6 +6,7 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
 use std::time::Instant;
 use std::env;
 
@@ -116,6 +117,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>>{
         println!("Day Eight Task Results:");
         println!("Part 1 Answer: {} ({:.2?})", day8part1, day8part1time);
         println!("Part 2 Answer: {} ({:.2?})", day8part2, day8part2time);
+    } else if day == "9" {
+        let now = Instant::now();
+        let day9part1 = day9::part1("09.txt")?;
+        let day9part1time = now.elapsed();
+
+        //now = Instant::now();
+        //let day9part2 = day9::part2("09b.txt")?;
+        //let day9part2time = now.elapsed();
+
+        println!("Day Nine Task Results:");
+        println!("Part 1 Answer: {} ({:.2?})", day9part1, day9part1time);
+        //println!("Part 2 Answer: {} ({:.2?})", day9part2, day9part2time);
     }
 
     Ok(())

@@ -61,19 +61,18 @@ pub fn part1(file_name: &str) -> Result<i64, Box<dyn std::error::Error>> {
 
     let mut totals: Vec<i64> = Vec::new();
     for x in figures {
-        let mut total: i64 = 0;
 
         if x[0] == 1 {
-            total = x.iter().product();
+            totals.push(x.iter().product());
             //println!("Performing sum operation, result = {}", total);
         } else if x[0] == 0 {
-            total = x.iter().sum();
+            totals.push(x.iter().sum());
             //println!("Performing multiple operation, result = {}", total);
         } else {
             eprintln!("Something has gone wrong, the operation value is neither a 1 or a 0");
             continue;
         }
-        totals.push(total);
+        
     }
 
     Ok(totals.iter().sum())

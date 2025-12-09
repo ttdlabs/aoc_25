@@ -11,8 +11,7 @@ pub fn part1(file_name: &str) -> Result<(i32, i64), Box<dyn std::error::Error>> 
     let mut fresh_ids: Vec<(i64, i64)> = Vec::new();
     let mut fresh_ingest = true;
     let mut fresh_count = 0;
-    let mut total_fresh_count = 0;
-    let mut overlap_count = 0;
+    //let mut total_fresh_count = 0;
 
     for line in reader.lines() {
         let line_string = line?;
@@ -47,7 +46,7 @@ pub fn part1(file_name: &str) -> Result<(i32, i64), Box<dyn std::error::Error>> 
 
                 // Add the IDs in the range to the fresh id vector
                 fresh_ids.push((range_start, range_end));
-                total_fresh_count += range_end-range_start+1;
+                //total_fresh_count += range_end-range_start+1;
 
             }
         } else {

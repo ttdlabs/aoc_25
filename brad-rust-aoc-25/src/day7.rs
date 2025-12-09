@@ -10,55 +10,6 @@ pub fn part2(file_name: &str) -> Result<i32, Box<dyn std::error::Error>> {
     calculate_universes_alt(file_name)
 }
 
-fn calculate_universes(file_name: &str) -> Result<i32, Box<dyn std::error::Error>> {
-    let file_path = Path::new(file_name);
-    let file = File::open(file_path)?;
-    let reader = BufReader::new(file);
-
-    // Obviously this fails due to the RAM consumption problem
-    // Maybe I should just store a single copy of the grid and then operate one line at a time, replacing it with the next one for each universe each iteration
-
-    let mut grids: Vec<(Vec<String>,i32)> = Vec::new(); // Storing the possible grid with the current beam x co-ord
-
-    // Load the original into memory
-    let mut cur_grid: Vec<String> = Vec::new();
-    for line in reader.lines() {
-        let line_string = line?;
-        cur_grid.push(line_string);
-    }
-    let y_max = cur_grid.len();
-    let x_max = cur_grid[0].len();
-    grids.push((cur_grid,0));
-
-    for y in 0..y_max { // At the top level we're approaching this one line at a time
-        let z_max = grids.len();
-
-        for z in 0..z_max { // Then we consider each possible grid
-            for x in 0..x_max { // With each character
-                let cur_char = grids[z].0[y].chars().nth(x).expect("Should be a char");
-
-                if cur_char == 'S' {
-                    grids[z].1 = x as i32;
-                } else if grids[z].1 == x as i32 {
-                    if cur_char == '.' && grids[z].1 == x as i32 {
-                        grids[z].0[y].replace_range(x..x+1, "|");
-                    } else if cur_char == '^' {
-                        grids.push(grids[z].clone()); // Create a timeline branch
-                        let new_grid_len = grids.len();
-                        grids[z].1 = (x-1) as i32; // Set current grids beam x
-                        grids[z].0[y].replace_range(x-1..x, "|");
-                        grids[new_grid_len-1].1 = (x+1) as i32; // Set new grids beam x
-                        grids[new_grid_len-1].0[y].replace_range(x+1..x+2, "|");
-                    }
-                }
-            }
-        }
-        //println!("Completed row {}, {} universes generated", y, grids.len());
-    }
-
-    Ok(grids.len() as i32)
-}
-
 fn calculate_universes_alt(file_name: &str) -> Result<i32, Box<dyn std::error::Error>> {
     // This works in theory but it's far too slow at the input size to be realistic (took nearly an hour to reach iteration 85 our of 140)
     // https://www.reddit.com/r/adventofcode/comments/1pgnmou/2025_day_7_lets_visualize/
@@ -81,7 +32,6 @@ fn calculate_universes_alt(file_name: &str) -> Result<i32, Box<dyn std::error::E
     let x_max = orig_grid[0].len();
 
     println!("Processing the consideration for infinite quantum universes:");
-    let mut percent = 0;
 
     for y in 0..y_max { // At the top level we're approaching this one line at a time
         let z_max = beam_xs.len();
